@@ -14,10 +14,12 @@
 <p align="center"><b><span id="pod-name">The San Fernando Valley</span></b><br><font size="2"><span id="pod-note">From the air.</span></font></p>
 <p align="center"><iframe id="pod-map" src="https://maps.google.com/maps?q=San+Fernando+Valley,+California&t=k&z=11&output=embed" width="100%" height="380" frameborder="0" scrolling="no" style="border:1px solid #000080;max-width:720px" title="Map"></iframe></p>
 <p align="center"><font size="1"><a id="pod-maps" href="https://www.google.com/maps/search/San+Fernando+Valley,+California">Open in Google Maps</a> &middot; <a id="pod-earth" href="https://earth.google.com/web/search/San+Fernando+Valley,+California">Open in Google Earth</a></font></p>
-<p><font size="2">A different place every day, chosen by the calendar, not by preference. Yesterday's is gone and tomorrow's is not yet known.</font></p>
+<p><font size="2">A different place every day, chosen by the calendar, not by preference. Now and then one is held over. Yesterday's is gone and tomorrow's is not yet known.</font></p>
 <script>
 (function(){
+  // A fourth element pins a place through that date (YYYY-MM-DD); remove it to let the calendar take over.
   var places=[
+    ["Bill's Burgers, Van Nuys","14742 Oxnard Street. Bill Elwell bought the stand in 1965 for $2,500 and worked the griddle for sixty years, until July 2025, when he died at 98. The stand carries on. Cash only.",18,"2026-10-21"],
     ["Bob's Big Boy, Burbank","4211 Riverside Drive. Open since 1949, the oldest surviving Big Boy. Classic cars on Friday nights.",17],
     ["Casa Vega, Sherman Oaks","13301 Ventura Boulevard. Dark inside at noon. Open since 1956.",18],
     ["Art's Delicatessen, Studio City","12224 Ventura Boulevard. Every sandwich is a work of Art, according to the sign.",18],
@@ -41,14 +43,16 @@
     ["Sherman Oaks Castle Park","4989 Sepulveda Boulevard. Miniature golf with a castle, since 1974.",18],
     ["The Japanese Garden, Van Nuys","6100 Woodley Avenue. A garden watered by the treatment plant next door.",17]
   ];
-  var day=Math.floor(Date.now()/864e5), p=places[day%places.length];
+  var d=new Date(), pad=function(n){return (n<10?"0":"")+n;}, iso=d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+  var pinned=places.filter(function(x){return x[3]&&iso<=x[3];})[0];
+  var day=Math.floor(Date.now()/864e5), p=pinned||places[day%places.length];
   var q=encodeURIComponent(p[0]);
   document.getElementById("pod-name").textContent=p[0];
   document.getElementById("pod-note").textContent=p[1];
   document.getElementById("pod-map").src="https://maps.google.com/maps?q="+q+"&t=k&z="+p[2]+"&output=embed";
   document.getElementById("pod-maps").href="https://www.google.com/maps/search/"+q;
   document.getElementById("pod-earth").href="https://earth.google.com/web/search/"+q;
-  var d=new Date(), m=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  var m=["January","February","March","April","May","June","July","August","September","October","November","December"];
   document.getElementById("pod-date").textContent=m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();
 })();
 </script>
