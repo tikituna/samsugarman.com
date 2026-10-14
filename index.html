@@ -49,7 +49,7 @@ button.radio[aria-pressed=true]{color:#ff0000}
       <ul>
         <li><button type="button" class="radio" id="radio" aria-pressed="false">&#9834; Sound off</button>
         <br><font size="1"><span id="now" style="display:none"></span></font>
-        <audio id="audio" preload="none" loop src="music/placeholder.mp3"></audio>
+        <audio id="audio" preload="none" loop><source src="https://github.com/tikituna/samsugarman.com/releases/download/audio/2007-compilation.mp3" type="audio/mpeg"></audio>
     </li></ul></td></tr>
 </table></center>
 <p></p>
@@ -64,7 +64,7 @@ button.radio[aria-pressed=true]{color:#ff0000}
 <p align="left"><font size="2">Copyright &copy; 2026<b> Sugarman Ltd.</b></font></p></dl>
 <script>
 (function(){
-  var track={title:"Placeholder Tone",artist:"Nobody yet",art:""};
+  var track={title:"2007 (Compilation)",artist:"Sam Sugarman",art:""};
   var audio=document.getElementById("audio"),btn=document.getElementById("radio"),now=document.getElementById("now");
   now.innerHTML=(track.art?'<img src="'+track.art+'" width="18" height="18" alt=""> ':'')+'Now playing: '+track.artist+' – '+track.title+' <span class="bars"><i></i><i></i><i></i><i></i></span>';
   function render(on){btn.setAttribute("aria-pressed",on?"true":"false");btn.textContent=on?"♪ Sound on":"♪ Sound off";now.style.display=on?"":"none";}
