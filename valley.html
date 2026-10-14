@@ -9,18 +9,49 @@
 <hr>
 <p align="center"><b>The San Fernando Valley</b><br><font size="1">Updated October 14, 2026</font></p>
 <p>The San Fernando Valley is the flat part of Los Angeles north of the hills. About 1.8 million people live in it. The ridge road that divides it from the rest of the city is Mulholland Drive. The long road that runs the length of it is Ventura Boulevard. Burbank, where Mulholland, Inc. has its offices, is in the Valley's eastern end.</p>
-<p><b>Points of interest, in no particular order.</b></p>
-<!-- SAM: this list is seed material, not your opinions. Replace it with the places and things you actually like. -->
-<ul>
-  <li><font size="2">Bob's Big Boy, Burbank. Open since 1949. The original Big Boy statue is out front.</font></li>
-  <li><font size="2">Casa Vega, Sherman Oaks. Dark inside at noon. Open since 1956.</font></li>
-  <li><font size="2">Art's Delicatessen, Studio City. Every sandwich is a work of Art, according to the sign.</font></li>
-  <li><font size="2">Cupid's Hot Dogs, Northridge. A walk-up window, since 1946.</font></li>
-  <li><font size="2">The Sepulveda Basin, Van Nuys. A flood-control reservoir that is a park nearly all of the time.</font></li>
-  <li><font size="2">Ventura Boulevard between Laurel Canyon and Sepulveda, at night, with the windows down.</font></li>
-  <li><font size="2">The Sherman Oaks Galleria, as it was in 1982, when a film crew used it as a high-school hangout.</font></li>
-  <li><font size="2">The Valley Relics Museum, Van Nuys, which keeps the neon signs from the places that closed.</font></li>
-</ul>
+<hr>
+<p align="center"><b>Place of the Day</b><br><font size="1"><span id="pod-date">&nbsp;</span></font></p>
+<p align="center"><b><span id="pod-name">The San Fernando Valley</span></b><br><font size="2"><span id="pod-note">From the air.</span></font></p>
+<p align="center"><iframe id="pod-map" src="https://maps.google.com/maps?q=San+Fernando+Valley,+California&t=k&z=11&output=embed" width="100%" height="380" frameborder="0" scrolling="no" style="border:1px solid #000080;max-width:720px" title="Map"></iframe></p>
+<p align="center"><font size="1"><a id="pod-maps" href="https://www.google.com/maps/search/San+Fernando+Valley,+California">Open in Google Maps</a> &middot; <a id="pod-earth" href="https://earth.google.com/web/search/San+Fernando+Valley,+California">Open in Google Earth</a></font></p>
+<p><font size="2">A different place every day, chosen by the calendar, not by preference. Yesterday's is gone and tomorrow's is not yet known.</font></p>
+<script>
+(function(){
+  var places=[
+    ["Bob's Big Boy, Burbank","4211 Riverside Drive. Open since 1949, the oldest surviving Big Boy. Classic cars on Friday nights.",17],
+    ["Casa Vega, Sherman Oaks","13301 Ventura Boulevard. Dark inside at noon. Open since 1956.",18],
+    ["Art's Delicatessen, Studio City","12224 Ventura Boulevard. Every sandwich is a work of Art, according to the sign.",18],
+    ["Cupid's Hot Dogs, Northridge","A walk-up window. The chain dates to 1946.",18],
+    ["Lake Balboa, Van Nuys","A lake inside a flood-control basin, which is a park nearly all of the time.",15],
+    ["Sherman Oaks Galleria","15301 Ventura Boulevard. In 1982 a film crew used the old one as a high-school hangout.",17],
+    ["Valley Relics Museum, Van Nuys","Two hangars at the airport that keep the neon signs from the places that closed.",17],
+    ["Porto's Bakery, Burbank","3614 Magnolia Boulevard. The line is part of it.",18],
+    ["Mission San Fernando Rey de Espana, Mission Hills","Founded 1797. The Valley is named after it.",17],
+    ["Campo de Cahuenga, Studio City","Where California was handed over in January 1847. It is across from a theme park now.",17],
+    ["Casa de Cadillac, Sherman Oaks","14401 Ventura Boulevard. A car dealership, 1949, with the best sign on the boulevard.",18],
+    ["The Smoke House, Burbank","4420 Lakeside Drive. Red booths and garlic bread, across from the studio, since 1946.",18],
+    ["Warner Bros. Studios, Burbank","The water tower on Olive Avenue.",16],
+    ["Van Nuys Airport","The last scene of Casablanca was shot here, in fog.",14],
+    ["Universal City Overlook, Mulholland Drive","The ridge road, looking north over the whole Valley at night.",16],
+    ["Stoney Point, Chatsworth","A sandstone outcrop at the Valley's northwest corner. Climbers, trains, and the old stagecoach route.",16],
+    ["Hansen Dam, Lake View Terrace","Built in 1940 to hold back the Tujunga Wash.",14],
+    ["Henry's Tacos, Studio City","4389 Tujunga Avenue. A stand since 1961.",18],
+    ["Dr. Hogly Wogly's Tyler Texas BBQ, Van Nuys","8136 Sepulveda Boulevard. Brisket in a building that has not changed its mind since 1969.",18],
+    ["Los Encinos State Historic Park, Encino","A spring, a pond, and an adobe from 1849, behind a fence on Ventura Boulevard.",17],
+    ["Sherman Oaks Castle Park","4989 Sepulveda Boulevard. Miniature golf with a castle, since 1974.",18],
+    ["The Japanese Garden, Van Nuys","6100 Woodley Avenue. A garden watered by the treatment plant next door.",17]
+  ];
+  var day=Math.floor(Date.now()/864e5), p=places[day%places.length];
+  var q=encodeURIComponent(p[0]);
+  document.getElementById("pod-name").textContent=p[0];
+  document.getElementById("pod-note").textContent=p[1];
+  document.getElementById("pod-map").src="https://maps.google.com/maps?q="+q+"&t=k&z="+p[2]+"&output=embed";
+  document.getElementById("pod-maps").href="https://www.google.com/maps/search/"+q;
+  document.getElementById("pod-earth").href="https://earth.google.com/web/search/"+q;
+  var d=new Date(), m=["January","February","March","April","May","June","July","August","September","October","November","December"];
+  document.getElementById("pod-date").textContent=m[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear();
+})();
+</script>
 <hr>
 <p><font size="2"><a href="index.html">Return to Home Page</a></font></p>
 <p><font size="2">Copyright &copy; 2026<b> Sugarman Ltd.</b></font></p>
