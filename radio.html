@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>Radio</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+button.radio{font:inherit;color:#800080;text-decoration:underline;background:none;border:0;padding:0;margin:0;cursor:pointer}
+button.radio[aria-pressed=true]{color:#ff0000}
+select{font:inherit;color:#000080;background:#fff;border:1px solid #000080;padding:1px 2px}
+.bars{display:inline-flex;align-items:flex-end;gap:2px;height:10px;width:18px;vertical-align:baseline;margin-left:3px}
+.bars i{display:block;width:3px;height:2px;background:#000080;animation:bar .8s ease-in-out infinite alternate}
+.bars i:nth-child(2){animation-delay:.2s}.bars i:nth-child(3){animation-delay:.4s}.bars i:nth-child(4){animation-delay:.6s}
+@keyframes bar{from{height:2px}to{height:10px}}
+@media (prefers-reduced-motion:reduce){.bars i{animation:none;height:6px}}
+</style>
+</head>
+<body link="#800080" bgcolor="#ffffff" text="#000080" vlink="#ff0000">
+<p align="center"><b><font size="5">S</font><font size="3">UGARMAN </font><font size="2">LTD.<br>San Fernando Valley, California</font></b></p>
+<hr>
+<p align="center"><b>Radio</b><br><font size="1">Updated October 14, 2026</font></p>
+<p>Live radio, through the same small speaker as the home page. The first stations are the Valley's and Los Angeles's. The last button tunes to a working station somewhere else in the world, chosen at random from the Radio Browser directory, which lists about 55,000 of them.</p>
+<table border="0" cellspacing="0" cellpadding="4">
+  <tr><td valign="top"><font size="2">Station</font></td><td valign="top"><font size="2"><select id="station">
+    <option value="https://playerservices.streamtheworld.com/api/livestream-redirect/KCSNFMAAC.aac">KCSN 88.5, Northridge</option>
+    <option value="https://kxlu.streamguys1.com/kxlu-hi">KXLU 88.9, Los Angeles</option>
+    <option value="https://streams.kcrw.com/kcrw_mp3">KCRW 89.9, Santa Monica</option>
+    <option value="https://streams.kcrw.com/e24_mp3">KCRW Eclectic 24</option>
+    <option value="https://streaming.live365.com/a49833">KJazz 88.1, Long Beach</option>
+    <option value="https://playerservices.streamtheworld.com/api/livestream-redirect/KUSCAAC64.aac">KUSC 91.5, Los Angeles</option>
+    <option value="https://laist.streamguys1.com/kpcc-mp3">KPCC 89.3, Pasadena</option>
+  </select> &nbsp; <button type="button" class="radio" id="elsewhere">Somewhere else</button></font></td></tr>
+  <tr><td valign="top"><font size="2">Sound</font></td><td valign="top"><font size="2"><button type="button" class="radio" id="radio" aria-pressed="false">&#9834; Sound off</button><br><span id="now" style="display:none"></span></font></td></tr>
+</table>
+<audio id="audio" preload="none"></audio>
+<p><font size="2">Streams belong to the stations. If one is silent, it is their silence, not ours; try another.</font></p>
+<script>
+(function(){
+  var audio=document.getElementById("audio"),btn=document.getElementById("radio"),now=document.getElementById("now"),sel=document.getElementById("station"),elsewhere=document.getElementById("elsewhere");
+  var current={name:sel.options[sel.selectedIndex].text,url:sel.value,where:""};
+  function label(on){btn.setAttribute("aria-pressed",on?"true":"false");btn.textContent=on?"♪ Sound on":"♪ Sound off";now.style.display=on?"":"none";}
+  function show(txt){now.innerHTML=txt+' <span class="bars"><i></i><i></i><i></i><i></i></span>';}
+  function tune(st,play){current=st;show("Now playing: "+st.name+(st.where?", "+st.where:""));audio.src=st.url;if(play){var p=audio.play();if(p&&p.catch)p.catch(function(){label(false);now.innerHTML="Could not reach "+st.name+".";now.style.display="";});}}
+  btn.addEventListener("click",function(){if(audio.paused){label(true);tune(current,true);}else{audio.pause();audio.removeAttribute("src");audio.load();label(false);}});
+  sel.addEventListener("change",function(){var st={name:sel.options[sel.selectedIndex].text,url:sel.value,where:""};if(audio.paused){current=st;}else{tune(st,true);}});
+  audio.addEventListener("error",function(){if(btn.getAttribute("aria-pressed")==="true"){now.innerHTML="Could not reach "+current.name+".";}});
+  elsewhere.addEventListener("click",function(){
+    elsewhere.textContent="Tuning…";
+    fetch("https://de1.api.radio-browser.info/json/stations/search?limit=1&order=random&hidebroken=true&is_https=true&lastcheckok=1&bitrate_min=64",{headers:{"Accept":"application/json"}})
+      .then(function(r){return r.json();})
+      .then(function(list){var s=list[0];if(!s)throw 0;var where=[s.state,s.country].filter(Boolean).join(", ");var st={name:s.name.trim(),url:s.url_resolved,where:where};
+        var o=document.createElement("option");o.value=st.url;o.textContent=st.name+(where?", "+where:"");sel.appendChild(o);sel.value=st.url;
+        label(true);tune(st,true);fetch("https://de1.api.radio-browser.info/json/url/"+s.stationuuid).catch(function(){});})
+      .catch(function(){now.innerHTML="The directory did not answer. Try again.";now.style.display="";})
+      .then(function(){elsewhere.textContent="Somewhere else";});
+  });
+  label(false);
+})();
+</script>
+<hr>
+<p><font size="2"><a href="index.html">Return to Home Page</a></font></p>
+<p><font size="2">Copyright &copy; 2026<b> Sugarman Ltd.</b></font></p>
+</body>
+</html>
