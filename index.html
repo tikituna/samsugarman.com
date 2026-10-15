@@ -45,7 +45,7 @@ button.radio[aria-pressed=true]{color:#ff0000}
         <li><a href="archive.html">Archive</a> <br><font size="1">Updated October 14, 2026<br></font></li></ul></td>
     <td height="45" valign="top" width="50%">
       <ul>
-        <li><a href="https://sfvradio.com/">San Fernando Valley Radio</a> <br><font size="1">On the air<br></font></li></ul></td></tr>
+        <li><a href="https://sfvradio.com/">San Fernando Valley Radio</a> <br><font size="1"><span id="sfv-line">On the air<br></span></font></li></ul></td></tr>
   <tr>
     <td height="45" valign="top" width="50%">
       <ul>
@@ -88,6 +88,24 @@ button.radio[aria-pressed=true]{color:#ff0000}
   render(false);
   var r=null;try{r=localStorage.getItem("radio")}catch(e){}
   if(r==="on")on();
+})();
+</script>
+<script>
+(function(){ // the station line: on the air or not, and what is playing, read from the transmitter
+  var S="https://sams-macbook-air.tail26a86d.ts.net:8443/",el=document.getElementById("sfv-line");
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  function show(){
+    fetch(S+"status-json.xsl?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json();}).then(function(j){
+      var src=j&&j.icestats&&j.icestats.source,up=false;if(src){var l=Array.isArray(src)?src:[src];up=l.some(function(m){return /\/live$/.test(m.listenurl||"");});}
+      if(!up){el.innerHTML="Off the air<br>";return;}
+      return fetch(S+"nowplaying.json?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json();}).then(function(n){
+        if(n&&n.title)el.innerHTML="On the air: "+esc(n.artist)+" \u2013 "+esc(n.title)+"<br>";
+        else if(n&&n.host)el.innerHTML="On the air: "+esc(n.host)+" has the station<br>";
+        else el.innerHTML="On the air<br>";
+      });
+    }).catch(function(){el.innerHTML="Off the air<br>";});
+  }
+  show();setInterval(show,30000);
 })();
 </script>
 </body>
