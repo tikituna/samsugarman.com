@@ -92,7 +92,7 @@ button.radio[aria-pressed=true]{color:#ff0000}
 </script>
 <script>
 (function(){ // the station line: on the air or not, and what is playing, read from the transmitter
-  var S="https://sams-macbook-air.tail26a86d.ts.net:8443/",el=document.getElementById("sfv-line");
+  var S="https://otto-macmini.tail26a86d.ts.net:8443/",el=document.getElementById("sfv-line");
   function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
   function show(){
     fetch(S+"status-json.xsl?t="+Date.now(),{cache:"no-store"}).then(function(r){return r.json();}).then(function(j){
